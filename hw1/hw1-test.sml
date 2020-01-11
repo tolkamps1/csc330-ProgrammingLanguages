@@ -1,4 +1,5 @@
-(* Assignment 1 Simple Test *)
+(* Assignment 1 Simple Test 
+   Provided by Daniel German, CSC 330: Programming Languages, University of Victoria*)
 
 (* These are basic test cases.  *)
 
