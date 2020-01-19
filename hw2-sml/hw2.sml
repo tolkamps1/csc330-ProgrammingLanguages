@@ -115,3 +115,31 @@ fun all_same_color(cs: card list): bool =
       | c::d::cs' => if card_color(c) = card_color(d)
                      then all_same_color(d::cs')
                      else false
+
+
+fun sum_cards(cs: card list): int = 
+    let
+      fun aux(cs, acc) =
+        case cs of
+            [] => acc
+          | c::cs' => aux(cs', acc+card_value(c))           
+    in
+      aux(cs, 0)
+    end
+
+
+fun score(cs: card list, goal: int): int = 
+    let
+      val color: bool = all_same_color(cs)
+      val sum: int = sum_cards(cs)
+    in
+      if sum > goal
+      then (if color then (sum-goal)
+      else (sum-goal) * 2)
+      else (if color then (goal-sum) div 2
+      else goal-sum)
+    end
+
+
+fun officiate(cs: card list, moves: move list, goal: int): int = 
+    0
