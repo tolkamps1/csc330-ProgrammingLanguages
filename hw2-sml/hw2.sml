@@ -142,4 +142,18 @@ fun score(cs: card list, goal: int): int =
 
 
 fun officiate(cs: card list, moves: move list, goal: int): int = 
-    0
+    let
+      fun game(hc: card list, cs: card list, moves: move list, goal: int)=
+        case moves of
+            [] => score(hc, goal)
+          | m::moves' => if m = Draw
+                         then (case cs of
+                            [] => score(hc, goal)
+                          | c::cs' => if sum_cards(c::hc) > goal
+                                        then score(c::hc, goal)
+                                        else game(c::hc, cs', moves', goal))
+                         else case m of
+                            Discard(card) => game(remove_card(hc, card, IllegalMove), cs, moves', goal)
+    in
+      game([],cs,moves,goal)
+    end
