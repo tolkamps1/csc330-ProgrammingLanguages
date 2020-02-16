@@ -71,3 +71,25 @@ fun longest_capitalized xs: string =
 
 fun rev_string str: string = 
 	(String.implode o List.rev o String.explode) str
+
+
+fun first_answer f xs =
+	case xs of
+		[] => raise NoAnswer
+	  | x::xs' => if f x <> NONE
+	  			  then valOf(f x)
+				  else first_answer f xs'
+
+
+fun all_answers f xs = 
+	let
+	  fun aux (xs, acc) =
+	    
+	in
+	  body
+	end
+	case xs of
+		[] => SOME []
+	  | x::xs' => if f x <> NONE
+	  			  then SOME (valOf(f x)@(valOf(all_answers f xs')))
+				  else NONE
