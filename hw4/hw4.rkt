@@ -6,12 +6,24 @@
 ;; you MUST replace them with your solutions
 ;;
 
-(define sequence null)
+(define (sequence low high stride)
+  (cond [(<= low high)
+         (cons low (sequence (+ low stride) high stride))]
+        [#t '()]))
 
-(define string-append-map null)
+
+(define (string-append-map xs suffix)
+  (map (lambda (str)
+         (string-append str suffix)) xs))
 
 
-(define list-nth-mod null)
+
+(define (list-nth-mod xs n)
+  (cond [(null? xs) (error "list-nth-mod: empty list")]
+        [(< n 0) (error "list-nth-mod: negative number")]
+        [#t (car (list-tail xs (remainder n (- (length xs) 1))))]
+        )
+  )
 
 (define stream-for-n-steps null)
 
