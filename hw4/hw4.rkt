@@ -25,13 +25,45 @@
         )
   )
 
-(define stream-for-n-steps null)
+(define (stream-for-n-steps s n)
+  (letrec ([f (lambda (s num)
+                (let ([pr (s)])
+                  (if (eqv? num 1) (list (car pr))
+                      (cons (car pr) (f (cdr pr) (- num 1)))
+                  )))])
+    (f s n))
+)
 
-(define funny-number-stream null)
 
-(define cat-then-dog null)
 
-(define stream-add-zero null)
+(define funny-number-stream
+  (letrec ([f (lambda (x)
+                (if (eqv? (modulo x 5) 0)
+                    (cons (* x -1) (lambda () (f (+ x 1))))
+                    (cons x (lambda () (f (+ x 1))))
+                    ))])
+    (lambda () (f 1)))
+  )
+
+
+(define cat-then-dog
+  (letrec ([f (lambda (x)
+                (if (eqv? (modulo x 2) 0)
+                    (cons "dog.jpg" (lambda () (f (+ x 1))))
+                    (cons "cat.jpg" (lambda () (f (+ x 1))))
+                    ))])
+      (lambda () (f 1)))
+  )
+
+
+(define (stream-add-zero s)
+  (letrec ([f (lambda (s)
+                (let ([pr (s)])
+                  (write (cons 0 (car pr)))
+                      (cons (cons 0 (car pr)) (lambda ()(f (cdr pr))))
+                  ))])
+  (lambda () (f s)))
+  )
 
 
 (define cycle-lists null)
