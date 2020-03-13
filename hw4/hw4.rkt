@@ -57,13 +57,13 @@
 
 
 (define (stream-add-zero s)
-  (letrec ([f (lambda (s)
-                (let ([pr (s)])
-                  (write (cons 0 (car pr)))
-                      (cons (cons 0 (car pr)) (lambda ()(f (cdr pr))))
-                  ))])
-  (lambda () (f s)))
-  )
+;  (letrec ([f (lambda (s)
+;                (let ([pr (s)])
+;                  (write (cons 0 (car pr)))
+;                      (cons (cons 0 (car pr)) (lambda ()(f (cdr pr))))
+;                  ))])
+;  (lambda () (f s)))
+  null )
 
 
 (define cycle-lists null)
