@@ -19,11 +19,12 @@ class MyPiece < Piece
                [[0, 0],[0, -1], [0, -2], [0, 1], [0, 2]]],
                rotations([[0, 0], [0, 1], [1, 1]]), # small L
                rotations([[0, 0], [-1, 0], [1, 0], [0, -1], [-1, -1]])] # T plus square
+  @cheat_piece = [[0,0]]
+  @cheat
 
   # Your Enhancements here
   def initialize(point_array, board)
     super
-    @cheat_piece = [0, 0]
   end
 
   # class method to choose the next piece
@@ -43,6 +44,7 @@ class MyBoard < Board
   # Your Enhancements here:
   def initialize(game)
     super
+    @cheat = false
   end
 
   # rotates the current piece 180 degrees
@@ -55,18 +57,42 @@ class MyBoard < Board
 
   # gets the next piece
   def next_piece
-    @current_block = MyPiece.next_piece(self)
+    if @cheat
+      @current_block = MyPiece.cheat(self)
+      @score -= 100
+      @cheat = false
+    else
+      @current_block = MyPiece.next_piece(self)
+    end
     @current_pos = nil
+
   end
 
   # cheat piece if score >= 100
   def cheat
     if @score >= 100
-      #@current_block = MyPiece.cheat(self)
-      #@current_pos = nil
-      @score -= 100
+      @cheat = true
     end
   end
+
+  # gets the information from the current piece about where it is and uses this
+  # to store the piece on the board itself. Then calls remove_filled.
+  # modified to handle cases for pieces with not 4 squares.
+  def store_current
+    locations = @current_block.current_rotation
+    displacement = @current_block.position
+    (0..4).each{|index| 
+      current = locations[index]
+      if current
+        @grid[current[1]+displacement[1]][current[0]+displacement[0]] = 
+        @current_pos[index]
+      end
+    }
+    remove_filled
+    @delay = [@delay - 2, 80].max
+  end
+
+
 
 end
 
@@ -79,8 +105,11 @@ class MyTetris < Tetris
 
   # creates a canvas and the board that interacts with it
   def set_board
-    super
+    @canvas = TetrisCanvas.new
     @board = MyBoard.new(self)
+    @canvas.place(@board.block_size * @board.num_rows + 3,
+                  @board.block_size * @board.num_columns + 6, 24, 80)
+    @board.draw
   end
 
   # add key bindings
