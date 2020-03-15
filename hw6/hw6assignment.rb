@@ -149,7 +149,6 @@ class MyPieceChallenge < MyPiece
 
   # method to choose cheat piece
   def self.cheat(board)
-    print @cheat_piece
     MyPieceChallenge.new(@cheat_piece, board)
   end
 
@@ -206,7 +205,6 @@ class MyBoardChallenge < MyBoard
   def trim
     # if cheat piece
     if @current_block.current_rotation.size <= 1
-      print "cheat piece"
       return
     elsif @current_block.trim >= 2
       @score += 20
@@ -234,9 +232,6 @@ end
 
 class MyTetrisChallenge < MyTetris
   # Your Enhancements here:
-  def initialize
-    super
-  end
 
   # creates a canvas and the board that interacts with it
   def set_board
