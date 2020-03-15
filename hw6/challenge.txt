@@ -1,0 +1,4 @@
+Challenge Problem
+In my game, as part of the challenge problem, the player can press the ’t’ key to trim:
+If the score is less than 40, nothing happens. Else the player loses 40 points and the current piece is trimmed by one random block. The player can trim each piece at most two times, then the piece's blocks will start being added again and (undoing to trim) and the player's score will be increased by 20 per block re-added.
+Trimming does not work on the cheat piece.
