@@ -44,7 +44,6 @@ a3 = a.intersect(Point.new(FOUR,FIVE))
 if not (a3.is_a? NoPoints)
     puts "#{__LINE__}: Point intersect not working properly"
 end
-
 #Line Tests
 b = Line.new(THREE,FIVE)
 if not (b.m == THREE and b.b == FIVE)
@@ -87,6 +86,7 @@ c1 = c.shift(THREE,FIVE)
 if not (c1.x == SIX)
     puts "#{__LINE__}: VerticalLine shift not working properly"
 end
+
 c2 = c.intersect(VerticalLine.new(THREE))
 if not ((c2.is_a? VerticalLine) and c2.x == THREE )
     puts "#{__LINE__}: VerticalLine intersect not working properly"
@@ -95,6 +95,7 @@ c3 = c.intersect(VerticalLine.new(FOUR))
 if not ((c3.is_a? NoPoints))
     puts "#{__LINE__}: VerticalLine intersect not working properly"
 end
+
 
 #LineSegment Tests
 d = LineSegment.new(ONE,TWO,-THREE,-FOUR)
@@ -154,7 +155,7 @@ l1 = l.preprocess_prog.eval_prog([])
 if not (l1.x1 == -ONE and l1.y1 == -TWO and l1.x2 == THREE and l1.y2 == FOUR)
     puts "#{__LINE__}: Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
 end
-
+=begin
 #Let Variable Shadowing Test
 l2 = Let.new("a", LineSegment.new(-ONE, -TWO, THREE, FOUR),
               Let.new("b", LineSegment.new(THREE,FOUR,-ONE,-TWO), 
@@ -163,7 +164,7 @@ l2 = l2.preprocess_prog.eval_prog([["a",Point.new(0,0)]])
 if not (l2.x1 == -ONE and l2.y1 == -TWO and l2.x2 == THREE and l2.y2 == FOUR)
     puts "#{__LINE__}: Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
 end
-
+=end
 #Shift Tests
 s = Shift.new(THREE,FIVE,LineSegment.new(-ONE,-TWO,THREE,FOUR))
 s1 = s.preprocess_prog.eval_prog([])
